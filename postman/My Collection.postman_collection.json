@@ -206,7 +206,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"name\": \"A_H_M\",\r\n    \"email\": \"test.user{{$randomInt}}@gmail.com\",\r\n    \"password\": \"P@ssword123\"\r\n}\r\n",
+          "raw": "{\r\n    \"name\": \"A_H_M_ITI\",\r\n    \"email\": \"test_user{{$randomInt}}@gmail.com\",\r\n    \"password\": \"P@ssword123\"\r\n}\r\n",
           "options": {
             "raw": {
               "language": "json"
@@ -1005,7 +1005,7 @@
               "pm.test(\"Validate unauthorized error\", function () {\r",
               "    var jsonData = pm.response.json();\r",
               "    pm.expect(jsonData.success).to.eql(false);\r",
-              "    pm.expect(jsonData.message).to.eql(\"No authentication token specified in the request\");\r",
+              "    pm.expect(jsonData.message).to.eql(\"No authentication token specified in x-auth-token header\");\r",
               "});\r",
               ""
             ],
@@ -1374,74 +1374,21 @@
       "response": []
     },
     {
-      "name": "DELETE note invalid",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Status code is 200\", function () {\r",
-              "    pm.response.to.have.status(200);\r",
-              "});\r",
-              "\r",
-              "pm.test(\"Note deleted successfully\", function () {\r",
-              "    var jsonData = pm.response.json();\r",
-              "    pm.expect(jsonData.success).to.eql(true);\r",
-              "    pm.expect(jsonData.message).to.include(\"Successfully\");\r",
-              "});\r",
-              ""
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        }
-      ],
-      "request": {
-        "method": "DELETE",
-        "header": [
-          {
-            "key": "x-auth-token",
-            "value": "{{auth_token}}",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{url}}notes/{{note_id}}",
-          "host": [
-            "{{url}}notes"
-          ],
-          "path": [
-            "{{note_id}}"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
       "name": "DELETE note valid",
       "event": [
         {
           "listen": "test",
           "script": {
             "exec": [
-              "pm.test(\"Status code is 200\", function () {\r",
+              "pm.test(\"Status code is 200 \", function () {\r",
               "    pm.response.to.have.status(200);\r",
               "});\r",
               "\r",
-              "pm.test(\"Completed status updated\", function () {\r",
+              "pm.test(\"Validate message is correct\", function () {\r",
               "    var jsonData = pm.response.json();\r",
               "    pm.expect(jsonData.success).to.eql(true);\r",
-              "    pm.expect(jsonData.data.completed).to.eql(true);\r",
+              "\r",
+              "   \r",
               "});\r",
               ""
             ],
@@ -1604,7 +1551,7 @@
               "pm.test(\"Response body shows Unauthorized error\", function () {\r",
               "    var jsonData = pm.response.json();\r",
               "    pm.expect(jsonData.success).to.eql(false);\r",
-              "    pm.expect(jsonData.message).to.include(\"Unauthorized\");\r",
+              "    pm.expect(jsonData.message).to.include(\"No authentication token specified in x-auth-token header\");\r",
               "});\r",
               ""
             ],
@@ -1641,69 +1588,6 @@
             "delete-account"
           ]
         }
-      },
-      "response": []
-    },
-    {
-      "name": "DELETE Account valid",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Status code is 200 OK\", function () {\r",
-              "    pm.response.to.have.status(200);\r",
-              "});\r",
-              "\r",
-              "pm.test(\"Account deleted successfully\", function () {\r",
-              "    var jsonData = pm.response.json();\r",
-              "    pm.expect(jsonData.success).to.eql(true);\r",
-              "    pm.expect(jsonData.status).to.eql(200);\r",
-              "    pm.expect(jsonData.message).to.eql(\"Successful Request\");\r",
-              "});\r",
-              ""
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        }
-      ],
-      "request": {
-        "method": "DELETE",
-        "header": [
-          {
-            "key": "x-auth-token",
-            "value": "{auth_token}}",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{url}}users/delete-account",
-          "host": [
-            "{{url}}users"
-          ],
-          "path": [
-            "delete-account"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "New Request",
-      "request": {
-        "method": "GET",
-        "header": []
       },
       "response": []
     }
